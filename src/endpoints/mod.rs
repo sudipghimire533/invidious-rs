@@ -1,5 +1,5 @@
 use crate::utils::GetRef;
-
+pub mod error;
 pub mod stats;
 
 /// Information related to url of this instance
@@ -36,5 +36,17 @@ where
             .expect("[EndpointPath::get_endpoint_path] InstanceUrl expected to be able to base")
             .push(Self::Path::get_ref().as_str());
         url
+    }
+}
+
+/// Middleware Callback for GET method.
+/// this is to allow web request to be called by the user itself
+/// This allow user to use any http web client and make callbacks
+/// specific to the server/proxy they use
+pub trait CallBackGet<Res> {
+    type Callback: Fn(&url::Url) -> Res;
+
+    fn callback_get(callback: &Self::Callback, url: &url::Url) -> Res {
+        callback(url)
     }
 }

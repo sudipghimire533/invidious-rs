@@ -364,3 +364,13 @@ pub struct ChannelComments {
     pub comments: Vec<ChannelComment>,
     pub continuation: Option<String>,
 }
+
+/// simple error in format of:
+/// ```json
+/// { error: "Some error message here" }
+/// ````
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SimpleError {
+    error: String,
+}
