@@ -9,3 +9,4 @@ serde_json = { version = "1" }
 url = { version = "2.5" }
 async-trait = { version = "0.1" }
 reqwest = { version = "*", features = ["json"]}
+derive_builder = { version = "*" }

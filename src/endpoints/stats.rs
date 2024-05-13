@@ -1,13 +1,29 @@
-use std::future::Future;
-use std::pin::Pin;
-
 use super::error::Error;
 use super::InstanceUrl;
 use crate::types;
-use crate::types::common::SimpleError;
-use crate::utils;
-use crate::utils::GetOwned;
-use serde::de::DeserializeOwned;
 
-pub type ExpectedOk = Vec<u8>;
-pub type ExpectedRes<Cbe> = Result<ExpectedOk, Error<Cbe>>;
+pub const STATS_API_PATH: &'static str = "/stats";
+pub static STATS_ENDPOINT: super::CallableEndpoint = super::CallableEndpoint {
+    endpoint_path: std::borrow::Cow::Borrowed(STATS_API_PATH),
+    post_dynamic_path: None,
+};
+pub type OkCallbackResponse = types::api_info::InvidiousStats;
+
+#[derive(Debug, Clone, Eq, PartialEq, Copy)]
+#[repr(transparent)]
+pub struct StatsEndpoint;
+impl StatsEndpoint {
+    pub async fn call_endpoint<CbError>(
+        instance: &InstanceUrl,
+        web_call_get: super::WebCallGet<CbError>,
+    ) -> Result<OkCallbackResponse, Error<CbError>> {
+        super::CallableEndpoint::call(
+            &STATS_ENDPOINT,
+            instance,
+            Option::<&'static str>::None,
+            Option::<&[(&'static str, Option<&'static str>)]>::None,
+            web_call_get,
+        )
+        .await
+    }
+}
