@@ -8,7 +8,8 @@ use $this_crate::{
     types,
 };
 
-pub type EndpointError = endpoints::error::Error<reqwest::Error>;
+pub type CallbackError = $cbe;
+pub type EndpointError = endpoints::error::Error<CallbackError>;
 pub type EndpointResult<Ok> = Result<Ok, EndpointError>;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -37,6 +38,3 @@ impl $target {
 
 }
 }
-
-#[allow(unused_imports)]
-pub use implement_all_api;
