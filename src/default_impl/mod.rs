@@ -10,9 +10,4 @@ pub async fn get(url: url::Url) -> Result<Vec<u8>, reqwest::Error> {
 pub struct Stats;
 pub struct StatsPath;
 
-crate::utils::impl_get_owned! {InvidiousStatEndpoint, String, String::from("/stats")}
-
-impl stats::StatsEndpoints<'_, reqwest::Error> for Stats {
-    type EndpointPath = InvidiousStatEndpoint;
-    type OkStatsResponse = crate::types::api_info::InvidiousStats;
-}
+crate::utils::value_as_type! {InvidiousStatEndpoint, String, String::from("/stats")}

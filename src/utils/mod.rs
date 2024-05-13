@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 // Quickly implment GetOwned trait
-macro_rules! impl_get_owned {
+macro_rules! value_as_type {
     ($type_name: ident, $value_type: ty, $value: expr) => {
         pub struct $type_name;
 
@@ -20,7 +20,7 @@ pub enum UntaggeBinary<First, Second> {
     Secondary(Second),
 }
 
-pub(crate) use impl_get_owned;
+pub(crate) use value_as_type;
 
 pub trait GetRef<'a, Item> {
     fn get_ref() -> &'a Item;
