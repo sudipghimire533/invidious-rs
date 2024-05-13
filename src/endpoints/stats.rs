@@ -1,33 +1,42 @@
+use std::future::Future;
+use std::pin::Pin;
+
 use super::error::Error;
-use super::CallBackGet;
-use super::EndpointPath;
 use super::InstanceUrl;
 use crate::types;
+use crate::types::common::SimpleError;
+use crate::utils;
+use crate::utils::GetOwned;
 use serde::de::DeserializeOwned;
 
-type ExpectedCallbackOkResponse<'a> = &'a [u8];
-type ExpectedCallbackErrorResponse = types::common::SimpleError;
-type ExpectedCallbackResponse<'a> =
-    Result<ExpectedCallbackOkResponse<'a>, ExpectedCallbackErrorResponse>;
+pub type ExpectedOk = Vec<u8>;
+pub type ExpectedRes<Cbe> = Result<ExpectedOk, Error<Cbe>>;
 
 /// Get stats of this instance
 /// https://docs.invidious.io/api/#get-apiv1stats
-pub trait StatsEndpoints<'ep, 'res> {
+pub trait StatsEndpoints<'ep, CbError> {
     // possible: /stats
-    type EndpointPath: EndpointPath<'ep>;
+    type EndpointPath: GetOwned<String>;
     // final output for this callback
     // possibly: types::InvidiousStats
     type OkStatsResponse: DeserializeOwned;
-    type CallBack: CallBackGet<ExpectedCallbackResponse<'res>>;
 
-    fn get_instance_stats(
-        instance: &impl InstanceUrl,
-        callback: &<Self::CallBack as CallBackGet<ExpectedCallbackResponse<'res>>>::Callback,
-    ) -> Result<Self::OkStatsResponse, Error<ExpectedCallbackErrorResponse>> {
-        let endpoint_path = Self::EndpointPath::get_endpoint_path(instance);
-        let response = Self::CallBack::callback_get(callback, &endpoint_path)?;
+    async fn get_instance_stats(
+        instance: &InstanceUrl,
+        web_call_get: fn(url::Url) -> Pin<Box<dyn Future<Output = ExpectedRes<CbError>>>>,
+    ) -> Result<Self::OkStatsResponse, Error<CbError>> {
+        let endpoint_path =
+            super::get_endpoint_path(instance, Self::EndpointPath::get_owned().as_str(), &[]);
+        let response = web_call_get(endpoint_path).await?;
 
-        serde_json::from_slice(response)
-            .map_err(|e| Error::DeserilizationError(Some(format!("{e:?}"))))
+        let result: Result<utils::UntaggeBinary<Self::OkStatsResponse, SimpleError>, _> =
+            serde_json::from_slice(response.as_slice());
+        match result {
+            Ok(utils::UntaggeBinary::Primary(stats)) => Ok(stats),
+            Ok(utils::UntaggeBinary::Secondary(simple_error)) => {
+                Err(Error::SimpleError(simple_error))
+            }
+            Err(de_err) => Err(Error::DeserilizationError(Some(format!("{de_err:?}")))),
+        }
     }
 }
