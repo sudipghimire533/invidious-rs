@@ -63,6 +63,8 @@ impl CallableEndpoint {
             Self::construct_full_path(instance, &paths, queries.unwrap_or_else(|| &[]));
         let response = web_call_get(endpoint_path).await?;
 
+        println!("==> {}", String::from_utf8_lossy(response.as_slice()));
+
         let result: Result<
             utils::UntaggeBinary<OkCallbackResponse, crate::types::common::SimpleError>,
             _,

@@ -44,6 +44,7 @@ mod tests {
     #[tokio::test]
     async fn stats_fetch_and_parse() {
         let res = REQWEST_INVIDIOUS.get_instance_stats(&get_instance()).await;
+        println!("{res:?}");
         assert!(res.is_ok());
     }
 }
