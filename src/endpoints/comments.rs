@@ -1,10 +1,13 @@
 use super::error::Error;
+use super::CallableEndpoint;
 use super::InstanceUrl;
+use super::WebCallGet;
 use crate::types;
+use std::borrow::Cow;
 
 pub const COMMENT_INFO_PATH: &'static str = "/comments";
-pub static COMMENT_INFO_ENDPOINT: super::CallableEndpoint = super::CallableEndpoint {
-    endpoint_path: std::borrow::Cow::Borrowed(COMMENT_INFO_PATH),
+pub static COMMENT_INFO_ENDPOINT: CallableEndpoint = CallableEndpoint {
+    endpoint_path: Cow::Borrowed(COMMENT_INFO_PATH),
     post_dynamic_path: None,
 };
 pub type CommentInfoResponse = types::common::CommentInfo;
@@ -24,7 +27,7 @@ impl CommentInfoEndpoint {
     pub async fn call_endpoint<CbError>(
         instance: &InstanceUrl,
         params: CommentParams<'_>,
-        web_call_get: super::WebCallGet<CbError>,
+        web_call_get: WebCallGet<CbError>,
     ) -> Result<CommentInfoResponse, Error<CbError>> {
         let comment_query = [
             ("sort_by", Some(params.sort_by.as_str())),

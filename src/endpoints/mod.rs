@@ -6,6 +6,7 @@ use std::{borrow::Cow, boxed::Box, convert::AsRef, future::Future, pin::Pin};
 pub mod comments;
 pub mod error;
 pub mod stats;
+pub mod suggestions;
 pub mod videos;
 
 #[derive(Debug, Clone, Eq, PartialEq)]

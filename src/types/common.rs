@@ -391,6 +391,26 @@ pub struct SimpleError {
     error: String,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum ContentCategory {
+    Music,
+    Gaming,
+    News,
+    Movies,
+}
+
+impl ContentCategory {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Music => "music",
+            Self::Gaming => "gaming",
+            Self::News => "news",
+            Self::Movies => "movies",
+        }
+    }
+}
+
 /// Sort comments
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -423,4 +443,11 @@ impl CommentSource {
             Self::Youtube => "youtube",
         }
     }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SearchSuggestion {
+    pub query: String,
+    pub suggestions: Vec<String>,
 }

@@ -326,11 +326,11 @@ pub struct TrendingVideo {
     }
 ]
 */
-pub type PopularShorts = Vec<PopularShort>;
+pub type PopularVideos = Vec<PopularVideo>;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PopularShort {
+pub struct PopularVideo {
     #[serde(rename = "type")]
     pub o_type: String,
     pub title: String,
