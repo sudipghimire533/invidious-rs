@@ -5,10 +5,10 @@ use crate::{
     types,
 };
 
-pub(super) type CallbackErrorOf<T> = <T as InvidiousEndpoint>::CallbackError;
-pub(super) type EndpointErrorOf<T> = endpoints::error::Error<CallbackErrorOf<T>>;
-pub(super) type EndpointResultOf<T, Ok> = Result<Ok, EndpointErrorOf<T>>;
-pub(super) type CallbackFn<T> =
+pub type CallbackErrorOf<T> = <T as InvidiousEndpoint>::CallbackError;
+pub type EndpointErrorOf<T> = endpoints::error::Error<CallbackErrorOf<T>>;
+pub type EndpointResultOf<T, Ok> = Result<Ok, EndpointErrorOf<T>>;
+pub type CallbackFn<T> =
     fn(url::Url) -> Pin<Box<dyn Future<Output = Result<Vec<u8>, CallbackErrorOf<T>>>>>;
 
 pub trait InvidiousEndpoint {

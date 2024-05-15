@@ -1,17 +1,8 @@
-use std::{
-    borrow::Cow,
-    boxed::Box,
-    convert::AsRef,
-    future::{self, Future},
-    marker::PhantomData,
-    pin::Pin,
-};
-
+use crate::utils;
+use error::Error;
 use serde::de::DeserializeOwned;
+use std::{borrow::Cow, boxed::Box, convert::AsRef, future::Future, pin::Pin};
 
-use crate::utils::{self, GetOwned, GetRef};
-
-use self::error::Error;
 pub mod comments;
 pub mod error;
 pub mod stats;
@@ -53,7 +44,7 @@ pub struct CallableEndpoint {
 }
 
 impl CallableEndpoint {
-    async fn call<OkCallbackResponse: DeserializeOwned + std::fmt::Debug, CbError>(
+    async fn call<OkCallbackResponse: DeserializeOwned, CbError>(
         &self,
         instance: &InstanceUrl,
         dynamic_path: Option<impl AsRef<str>>,
