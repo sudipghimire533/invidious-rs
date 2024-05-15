@@ -28,14 +28,22 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn fetch_and_parse() {
-        let instance = get_instance();
-        let query = VideoInfoParams {
-            video_id: "Wx92JT6IrKY",
-            region: IsoRegion::NP,
-        };
+    async fn video_fetch_and_parse() {
+        let res = REQWEST_INVIDIOUS
+            .get_video_info(
+                &get_instance(),
+                VideoInfoParams {
+                    video_id: "Wx92JT6IrKY",
+                    region: IsoRegion::NP,
+                },
+            )
+            .await;
+        assert!(res.is_ok());
+    }
 
-        let res = REQWEST_INVIDIOUS.get_video_info(&instance, query).await;
+    #[tokio::test]
+    async fn stats_fetch_and_parse() {
+        let res = REQWEST_INVIDIOUS.get_instance_stats(&get_instance()).await;
         assert!(res.is_ok());
     }
 }
