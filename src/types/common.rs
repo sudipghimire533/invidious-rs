@@ -239,7 +239,16 @@ CommentInfo
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Comment {
+pub struct CommentInfo {
+    comment_count: Option<i32>,
+    video_id: String,
+    comments: Vec<CommentUnit>,
+    continuation: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CommentUnit {
     pub author: String,
     pub author_thumbnails: Vec<ImageObject>,
     pub author_id: String,
@@ -373,4 +382,38 @@ pub struct ChannelComments {
 #[serde(rename_all = "camelCase")]
 pub struct SimpleError {
     error: String,
+}
+
+/// Sort comments
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum CommentSorting {
+    Top,
+    New,
+}
+
+impl CommentSorting {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Top => "top",
+            Self::New => "new",
+        }
+    }
+}
+
+/// Comment source
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum CommentSource {
+    Youtube,
+    Reddit,
+}
+
+impl CommentSource {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Reddit => "reddit",
+            Self::Youtube => "youtube",
+        }
+    }
 }

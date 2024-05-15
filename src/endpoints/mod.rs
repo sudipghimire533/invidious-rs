@@ -12,6 +12,7 @@ use serde::de::DeserializeOwned;
 use crate::utils::{self, GetOwned, GetRef};
 
 use self::error::Error;
+pub mod comments;
 pub mod error;
 pub mod stats;
 pub mod videos;

@@ -5,5 +5,4 @@ pub async fn reqwest_get_bytes(url: url::Url) -> Result<Vec<u8>, reqwest::Error>
     Ok(bytes.to_vec())
 }
 
-
 crate::implement_all_api!(crate, InvidiousReqwest, reqwest::Error, reqwest_get_bytes);
