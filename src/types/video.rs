@@ -14,10 +14,12 @@ pub struct AdaptiveFormats {
     pub type_: String,
     pub clen: String,
     pub lmt: String,
-    pub projection_type: i32,
+    pub projection_type: serde_json::Value,
     pub container: String,
     pub encoding: String,
+    #[serde(default = "String::new")] // TODO: this field is not present?
     pub quality_label: String,
+    #[serde(default = "String::new")] // TODO: this field is not present?
     pub resolution: String,
 }
 
@@ -215,13 +217,14 @@ pub struct VideoInfo {
     pub author: String,
     pub author_id: String,
     pub author_url: String,
+    // ? pub author_verified: bool,
     pub author_thumbnails: Vec<common::ImageObject>,
 
     pub sub_count_text: String,
     pub length_seconds: i32,
     pub allow_ratings: bool,
     // rating's type is actually f32, but it lacks EQ-like trait. stick to string for now
-    pub rating: String,
+    pub rating: ordered_float::OrderedFloat<f32>,
     pub is_listed: bool,
     pub live_now: bool,
     pub is_post_live_dvr: bool,

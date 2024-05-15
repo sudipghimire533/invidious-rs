@@ -53,7 +53,7 @@ pub struct CallableEndpoint {
 }
 
 impl CallableEndpoint {
-    async fn call<OkCallbackResponse: DeserializeOwned, CbError>(
+    async fn call<OkCallbackResponse: DeserializeOwned + std::fmt::Debug, CbError>(
         &self,
         instance: &InstanceUrl,
         dynamic_path: Option<impl AsRef<str>>,

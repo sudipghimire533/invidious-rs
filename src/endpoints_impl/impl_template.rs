@@ -1,51 +1,53 @@
-#[macro_export]
-macro_rules! implement_all_api {
-    ($this_crate: path, $target: ident, $cbe: ty, $get_callback: expr) => {
-        use $this_crate::{
-            endpoints::{self, InstanceUrl},
-            types,
-        };
+use std::{future::Future, pin::Pin};
 
-        pub type CallbackError = $cbe;
-        pub type EndpointError = endpoints::error::Error<CallbackError>;
-        pub type EndpointResult<Ok> = Result<Ok, EndpointError>;
+use crate::{
+    endpoints::{self, InstanceUrl},
+    types,
+};
 
-        #[derive(Debug, Clone, Eq, PartialEq)]
-        pub struct $target;
+pub(super) type CallbackErrorOf<T> = <T as InvidiousEndpoint>::CallbackError;
+pub(super) type EndpointErrorOf<T> = endpoints::error::Error<CallbackErrorOf<T>>;
+pub(super) type EndpointResultOf<T, Ok> = Result<Ok, EndpointErrorOf<T>>;
+pub(super) type CallbackFn<T> =
+    fn(url::Url) -> Pin<Box<dyn Future<Output = Result<Vec<u8>, CallbackErrorOf<T>>>>>;
 
-        impl $target {
-            pub async fn get_instance_stats(
-                instance: &InstanceUrl,
-            ) -> EndpointResult<types::api_info::InvidiousStats> {
-                endpoints::stats::StatsEndpoint::call_endpoint::<$cbe>(instance, |url| {
-                    Box::pin($get_callback(url))
-                })
-                .await
-            }
+pub trait InvidiousEndpoint {
+    type CallbackError;
+    const WEB_CALL_GET: CallbackFn<Self>;
 
-            pub async fn get_video_info(
-                instance: &InstanceUrl,
-                query_params: endpoints::videos::VideoParams<'_>,
-            ) -> EndpointResult<types::video::VideoInfo> {
-                endpoints::videos::VideoInfoEndpoint::call_endpoint::<$cbe>(
-                    instance,
-                    query_params,
-                    |url| Box::pin($get_callback(url)),
-                )
-                .await
-            }
+    async fn get_instance_stats(
+        &self,
+        instance: &InstanceUrl,
+    ) -> EndpointResultOf<Self, types::api_info::InvidiousStats> {
+        endpoints::stats::StatsEndpoint::call_endpoint::<Self::CallbackError>(
+            instance,
+            Self::WEB_CALL_GET,
+        )
+        .await
+    }
 
-            pub async fn get_comment_info(
-                instance: &InstanceUrl,
-                query_params: endpoints::comments::CommentParams<'_>,
-            ) -> EndpointResult<types::common::CommentInfo> {
-                endpoints::comments::CommentInfoEndpoint::call_endpoint::<$cbe>(
-                    instance,
-                    query_params,
-                    |url| Box::pin($get_callback(url)),
-                )
-                .await
-            }
-        }
-    };
+    async fn get_video_info(
+        &self,
+        instance: &InstanceUrl,
+        query_params: endpoints::videos::VideoInfoParams<'_>,
+    ) -> EndpointResultOf<Self, types::video::VideoInfo> {
+        endpoints::videos::VideoInfoEndpoint::call_endpoint::<Self::CallbackError>(
+            instance,
+            query_params,
+            Self::WEB_CALL_GET,
+        )
+        .await
+    }
+
+    async fn get_comment_info(
+        instance: &InstanceUrl,
+        query_params: endpoints::comments::CommentParams<'_>,
+    ) -> EndpointResultOf<Self, types::common::CommentInfo> {
+        endpoints::comments::CommentInfoEndpoint::call_endpoint::<Self::CallbackError>(
+            instance,
+            query_params,
+            Self::WEB_CALL_GET,
+        )
+        .await
+    }
 }

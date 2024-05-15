@@ -1,6 +1,13 @@
 use super::attachments;
 use serde::{Deserialize, Serialize};
 
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum StringOrNumber<Number> {
+    String(String),
+    Number(Number),
+}
+
 // types are references from:
 // https://docs.invidious.io/api/common_types/
 

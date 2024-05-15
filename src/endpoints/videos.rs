@@ -10,7 +10,7 @@ pub static VIDEO_INFO_ENDPOINT: super::CallableEndpoint = super::CallableEndpoin
 pub type VideoInfoResponse = types::video::VideoInfo;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct VideoParams<'a> {
+pub struct VideoInfoParams<'a> {
     pub video_id: &'a str,
     pub region: types::region::IsoRegion,
 }
@@ -21,7 +21,7 @@ pub struct VideoInfoEndpoint;
 impl VideoInfoEndpoint {
     pub async fn call_endpoint<CbError>(
         instance: &InstanceUrl,
-        params: VideoParams<'_>,
+        params: VideoInfoParams<'_>,
         web_call_get: super::WebCallGet<CbError>,
     ) -> Result<VideoInfoResponse, Error<CbError>> {
         let region_as_query = [("region", Some(params.region.as_str()))];
