@@ -1,6 +1,5 @@
 pub mod endpoints;
 pub mod endpoints_impl;
-pub mod instance;
 pub mod types;
 pub mod utils;
 
