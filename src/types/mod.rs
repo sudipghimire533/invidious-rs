@@ -4,3 +4,4 @@ pub mod channel;
 pub mod common;
 pub mod region;
 pub mod video;
+pub mod comments;

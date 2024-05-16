@@ -18,7 +18,7 @@ pub trait InvidiousEndpoint {
     async fn get_instance_stats(
         &self,
         instance: &InstanceUrl,
-    ) -> EndpointResultOf<Self, types::api_info::InvidiousStats> {
+    ) -> EndpointResultOf<Self, endpoints::stats::OkCallbackResponse> {
         endpoints::stats::StatsEndpoint::call_endpoint::<Self::CallbackError>(
             instance,
             Self::WEB_CALL_GET,
@@ -30,7 +30,7 @@ pub trait InvidiousEndpoint {
         &self,
         instance: &InstanceUrl,
         query_params: endpoints::videos::VideoInfoParams<'_>,
-    ) -> EndpointResultOf<Self, types::video::VideoInfo> {
+    ) -> EndpointResultOf<Self, endpoints::videos::OkCallbackResponse> {
         endpoints::videos::VideoInfoEndpoint::call_endpoint::<Self::CallbackError>(
             instance,
             query_params,
@@ -42,12 +42,21 @@ pub trait InvidiousEndpoint {
     async fn get_comment_info(
         instance: &InstanceUrl,
         query_params: endpoints::comments::CommentParams<'_>,
-    ) -> EndpointResultOf<Self, types::common::CommentInfo> {
+    ) -> EndpointResultOf<Self, endpoints::comments::OkCallbackResponse> {
         endpoints::comments::CommentInfoEndpoint::call_endpoint::<Self::CallbackError>(
             instance,
             query_params,
             Self::WEB_CALL_GET,
         )
         .await
+    }
+
+    async fn get_channel_comment(
+        instance: &InstanceUrl,
+        query_params: endpoints::channels::comments::ChannelCommentParams<'_>
+    ) -> EndpointResultOf<Self, endpoints::channels::comments::OkCallbackResponse> {
+        endpoints::channels::comments::ChannelCommentEndpoint::call_endpoint::<Self::CallbackError>(
+            instance, query_params, Self::WEB_CALL_GET
+        ).await
     }
 }

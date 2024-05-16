@@ -10,7 +10,7 @@ pub static SEARCH_SUGGESTION_ENDPOINT: CallableEndpoint = CallableEndpoint {
     endpoint_path: Cow::Borrowed(SEARCH_SUGGESTION_PATH),
     post_dynamic_path: None,
 };
-pub type SearchSuggestionResponse = types::common::SearchSuggestion;
+pub type OkCallbackResponse = types::common::SearchSuggestion;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct SearchSuggestionParams<'a> {
@@ -25,7 +25,7 @@ impl CommentInfoEndpoint {
         instance: &InstanceUrl,
         params: SearchSuggestionParams<'_>,
         web_call_get: WebCallGet<CbError>,
-    ) -> Result<SearchSuggestionResponse, Error<CbError>> {
+    ) -> Result<OkCallbackResponse, Error<CbError>> {
         let comment_query = [("q", Some(params.q))];
 
         CallableEndpoint::call(

@@ -262,6 +262,7 @@ pub struct CommentUnit {
     pub author_url: String,
 
     pub is_edited: bool,
+    #[serde(default)]
     pub is_pinned: bool,
 
     pub content: String,
@@ -353,31 +354,12 @@ ChannelComment
   "continuation": String?
 }
 */
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ChannelComment {
-    pub author: String,
-    pub author_thumbnails: Vec<ImageObject>,
-    pub author_id: String,
-    pub author_url: String,
-    pub is_edited: bool,
-    pub content: String,
-    pub content_html: String,
-    pub published: i64,
-    pub published_text: String,
-    pub like_count: i32,
-    pub comment_id: String,
-    pub author_is_channel_owner: bool,
-    pub creator_heart: Option<CommentHeart>,
-    pub replies: Option<CommentReplies>,
-    pub attachment: Option<attachments::Attachment>,
-}
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ChannelComments {
     pub author_id: String,
-    pub comments: Vec<ChannelComment>,
+    pub comments: Vec<CommentUnit>,
     pub continuation: Option<String>,
 }
 

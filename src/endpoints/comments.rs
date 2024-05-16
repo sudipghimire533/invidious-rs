@@ -10,7 +10,7 @@ pub static COMMENT_INFO_ENDPOINT: CallableEndpoint = CallableEndpoint {
     endpoint_path: Cow::Borrowed(COMMENT_INFO_PATH),
     post_dynamic_path: None,
 };
-pub type CommentInfoResponse = types::common::CommentInfo;
+pub type OkCallbackResponse = types::common::CommentInfo;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct CommentParams<'a> {
@@ -28,7 +28,7 @@ impl CommentInfoEndpoint {
         instance: &InstanceUrl,
         params: CommentParams<'_>,
         web_call_get: WebCallGet<CbError>,
-    ) -> Result<CommentInfoResponse, Error<CbError>> {
+    ) -> Result<OkCallbackResponse, Error<CbError>> {
         let comment_query = [
             ("sort_by", Some(params.sort_by.as_str())),
             ("source", Some(params.source.as_str())),
@@ -44,4 +44,8 @@ impl CommentInfoEndpoint {
         )
         .await
     }
+}
+
+pub mod channel {
+    pub use crate::endpoints::channel::comment;
 }

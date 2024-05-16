@@ -3,6 +3,7 @@ use error::Error;
 use serde::de::DeserializeOwned;
 use std::{borrow::Cow, boxed::Box, convert::AsRef, future::Future, pin::Pin};
 
+pub mod channels;
 pub mod comments;
 pub mod error;
 pub mod stats;

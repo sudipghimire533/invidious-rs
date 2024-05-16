@@ -9,7 +9,7 @@ pub static VIDEO_INFO_ENDPOINT: CallableEndpoint = CallableEndpoint {
     endpoint_path: Cow::Borrowed(VIDEO_INFO_PATH),
     post_dynamic_path: None,
 };
-pub type VideoInfoResponse = types::video::VideoInfo;
+pub type OkCallbackResponse = types::video::VideoInfo;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct VideoInfoParams<'a> {
@@ -25,7 +25,7 @@ impl VideoInfoEndpoint {
         instance: &InstanceUrl,
         params: VideoInfoParams<'_>,
         web_call_get: WebCallGet<CbError>,
-    ) -> Result<VideoInfoResponse, Error<CbError>> {
+    ) -> Result<OkCallbackResponse, Error<CbError>> {
         let region_as_query = [("region", Some(params.region.as_str()))];
 
         CallableEndpoint::call(
