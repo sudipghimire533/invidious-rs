@@ -6,6 +6,7 @@ use std::{borrow::Cow, boxed::Box, convert::AsRef, future::Future, pin::Pin};
 pub mod channels;
 pub mod comments;
 pub mod error;
+pub mod search;
 pub mod stats;
 pub mod suggestions;
 pub mod videos;
@@ -65,8 +66,6 @@ impl CallableEndpoint {
             Self::construct_full_path(instance, &paths, queries.unwrap_or_else(|| &[]));
         let response = web_call_get(endpoint_path).await?;
 
-        println!("==> {}", String::from_utf8_lossy(response.as_slice()));
-
         let result: Result<
             utils::UntaggeBinary<OkCallbackResponse, crate::types::common::SimpleError>,
             _,
@@ -95,7 +94,7 @@ impl CallableEndpoint {
             .extend(paths);
 
         // add query
-        for (key, val) in queries {
+        for (key, val) in queries.into_iter().filter(|(k, _)| !k.as_ref().is_empty()) {
             match val {
                 Some(val) => url
                     .query_pairs_mut()

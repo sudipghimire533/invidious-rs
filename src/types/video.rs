@@ -347,3 +347,53 @@ pub struct PopularVideo {
     pub published: i64,
     pub published_text: String,
 }
+
+/*
+{
+    type: "video",
+    title: String,
+    videoId: String,
+    author: String,
+    authorId: String,
+    authorUrl: String,
+    videoThumbnails: [
+      {
+        quality: String,
+        url: String,
+        width: Int32,
+        height: Int32
+      }
+    ],
+    description: String,
+    descriptionHtml: String,
+    viewCount: Int64,
+    published: Int64,
+    publishedText: String,
+    lengthSeconds: Int32,
+    liveNow: Bool,
+    paid: Bool,
+    premium: Bool
+
+*/
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SearchVideoUnit {
+    #[serde(rename = "type")]
+    pub o_type: String,
+    pub title: String,
+    pub video_id: String,
+    pub author: String,
+    pub author_id: String,
+    pub author_url: String,
+    pub video_thumbnails: Vec<common::ThumbnailObject>,
+    pub description: String,
+    pub description_html: String,
+    pub view_count: i64,
+    pub published: i64,
+    pub published_text: String,
+    pub length_seconds: i32,
+    pub live_now: bool,
+    pub paid: bool,
+    pub premium: bool,
+}

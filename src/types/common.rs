@@ -433,3 +433,129 @@ pub struct SearchSuggestion {
     pub query: String,
     pub suggestions: Vec<String>,
 }
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum SortingOption {
+    Relavence,
+    Rating,
+    UploadDate,
+    ViewCount,
+}
+
+impl SortingOption {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Relavence => "relevance",
+            Self::Rating => "rating",
+            Self::UploadDate => "uploadDate",
+            Self::ViewCount => "viewCount",
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum QueryResultDate {
+    Hour,
+    Today,
+    Week,
+    Month,
+    Year,
+}
+
+impl QueryResultDate {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Hour => "hour",
+            Self::Today => "today",
+            Self::Week => "week",
+            Self::Month => "month",
+            Self::Year => "year",
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum SearchResultType {
+    Video,
+    Playlist,
+    Channel,
+    Movie,
+    Show,
+    All,
+}
+
+impl SearchResultType {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Video => "video",
+            Self::Playlist => "playlist",
+            Self::Channel => "channel",
+            Self::Movie => "movie",
+            Self::Show => "show",
+            Self::All => "all",
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum QueryResultFeatures {
+    Hd,
+    Subtitles,
+    CeativeCommons,
+    ThreeD,
+    Live,
+    Purchased,
+    FourK,
+    Three60,
+    Location,
+    Hdr,
+    Vr180,
+}
+
+impl QueryResultFeatures {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Hd => "hd",
+            Self::Subtitles => "subtitles",
+            Self::CeativeCommons => "creativeCommons",
+            Self::ThreeD => "3d",
+            Self::Live => "live",
+            Self::Purchased => "purchased",
+            Self::FourK => "4k",
+            Self::Three60 => "360",
+            Self::Location => "location",
+            Self::Hdr => "hdr",
+            Self::Vr180 => "vr180",
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum QueryResultDuration {
+    Short,
+    Long,
+    Medium,
+}
+
+impl QueryResultDuration {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Short => "short",
+            Self::Long => "long",
+            Self::Medium => "medium",
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", untagged)]
+pub enum SearchResult {
+    Video(super::video::SearchVideoUnit),
+    Playlist(super::playlists::SearchPlaylistUnit),
+    Channel(super::channel::SearchChannelUnit),
+}

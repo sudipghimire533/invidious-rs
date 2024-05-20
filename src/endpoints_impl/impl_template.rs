@@ -53,10 +53,13 @@ pub trait InvidiousEndpoint {
 
     async fn get_channel_comment(
         instance: &InstanceUrl,
-        query_params: endpoints::channels::comments::ChannelCommentParams<'_>
+        query_params: endpoints::channels::comments::ChannelCommentParams<'_>,
     ) -> EndpointResultOf<Self, endpoints::channels::comments::OkCallbackResponse> {
         endpoints::channels::comments::ChannelCommentEndpoint::call_endpoint::<Self::CallbackError>(
-            instance, query_params, Self::WEB_CALL_GET
-        ).await
+            instance,
+            query_params,
+            Self::WEB_CALL_GET,
+        )
+        .await
     }
 }
