@@ -14,26 +14,27 @@ echo "Using instance $INVIDIOUS_DOMAIN .."
 
 DEST_DIR=$(dirname "$0")
 function save_response() {
-  URL=$1
-  DEST_FILE=$DEST_DIR/$2
+  URL=$2
+  FILE_NAME=$1
+  DEST_FILE=$DEST_DIR/$FILE_NAME
 
   curl -s "$URL" >"$DEST_FILE";
   if [ "$?" -ne 0 ]; then
-    echo "Call to $1 Failed.."
+    echo "Call to $URL Failed.."
     return 1;
   else
-    echo "FIle $2 updated with response from $1"
+    echo "FIle $FILE_NAME updated with response from $URL"
     return 0
   fi
 }
 
-save_response "$INVIDIOUS_DOMAIN/stats" "instance-stats.json"
+save_response "instance-stats.json"   "$INVIDIOUS_DOMAIN/stats" 
 
-save_response "$INVIDIOUS_DOMAIN/search?q=bartika-eam-rai" "search-all.json"
+save_response "search-all.json"       "$INVIDIOUS_DOMAIN/search?q=bartika-eam-rai" 
 
-save_response "$INVIDIOUS_DOMAIN/channels/UCX6OQ3DkcsbYNE6H8uQQuVA" "channel-info.json"
+save_response "channel-info.json"     "$INVIDIOUS_DOMAIN/channels/UCX6OQ3DkcsbYNE6H8uQQuVA"
 
-save_response "$INVIDIOUS_DOMAIN/videos/Wx92JT6IrKY" "video-info.json"
+save_response "video-info.json"       "$INVIDIOUS_DOMAIN/videos/Wx92JT6IrKY"
 
-save_response "$INVIDIOUS_DOMAIN/playlist/PLm3v_EFg1EILrg_6fHX6kt2iEoIbFu6n4" "playlist-info.json"
+save_response "playlist-info.json"    "$INVIDIOUS_DOMAIN/playlist/PLm3v_EFg1EILrg_6fHX6kt2iEoIbFu6n4"
 
