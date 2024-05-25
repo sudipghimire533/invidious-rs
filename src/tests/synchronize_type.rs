@@ -55,5 +55,7 @@ fn playlist_info() {
 
 #[test]
 fn search_all() {
-    assert_ok!(test_type_str::<endpoints::search::OkCallbackResponse>("search-all.json"));
+    assert_ok!(test_type_str::<endpoints::search::OkCallbackResponse>(
+        "search-all.json"
+    ));
 }
