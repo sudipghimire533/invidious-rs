@@ -52,7 +52,7 @@ pub mod channel {
     #[derive(Debug, Clone)]
     pub struct ChannelPlaylistsParams<'a> {
         pub channel_id: &'a str,
-        pub sort_by: types::common::PlaylistSortingOption,
+        pub sort_by: types::params::PlaylistSortingOption,
         pub continuation: String,
     }
 

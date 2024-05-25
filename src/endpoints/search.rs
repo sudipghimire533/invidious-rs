@@ -16,11 +16,11 @@ pub type OkCallbackResponse = types::common::SearchResult;
 pub struct SearchParams {
     pub q: String,
     pub page: i32,
-    pub sort_by: types::common::SortingOption,
-    pub duration: types::common::QueryResultDuration,
-    pub date: types::common::QueryResultDate,
-    pub search_type: types::common::SearchResultType,
-    pub features: Vec<types::common::QueryResultFeatures>,
+    pub sort_by: types::params::SortingOption,
+    pub duration: types::params::QueryResultDuration,
+    pub date: types::params::QueryResultDate,
+    pub search_type: types::params::SearchResultType,
+    pub features: Vec<types::params::QueryResultFeatures>,
     pub region: types::region::IsoRegion,
 }
 

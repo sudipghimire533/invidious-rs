@@ -52,7 +52,7 @@ pub mod trending {
     #[derive(Debug, Clone)]
     pub struct TrendingVideoParams {
         pub region: types::region::IsoRegion,
-        pub type_: types::common::ContentCategory,
+        pub type_: types::params::ContentCategory,
     }
 
     #[derive(Debug, Clone, Eq, PartialEq, Copy)]

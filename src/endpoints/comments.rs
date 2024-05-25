@@ -16,8 +16,8 @@ pub type OkCallbackResponse = types::common::CommentInfo;
 pub struct CommentParams<'a> {
     pub id: &'a str,
     pub continuation: String,
-    pub sort_by: crate::types::common::CommentSorting,
-    pub source: crate::types::common::CommentSource,
+    pub sort_by: crate::types::params::CommentSorting,
+    pub source: crate::types::params::CommentSource,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq, Copy)]
