@@ -10,7 +10,7 @@ pub static SEARCH_ENDPOINT: CallableEndpoint = CallableEndpoint {
     endpoint_path: Cow::Borrowed(SEARCH_API_PATH),
     post_dynamic_path: None,
 };
-pub type OkCallbackResponse = types::common::SearchResult;
+pub type OkCallbackResponse = types::common::SearchResults;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct SearchParams {

@@ -385,3 +385,5 @@ pub enum SearchResult {
     Playlist(super::playlists::SearchPlaylistUnit),
     Channel(super::channel::SearchChannelUnit),
 }
+
+pub type SearchResults = Vec<SearchResult>;

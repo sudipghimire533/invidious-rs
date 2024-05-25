@@ -18,7 +18,7 @@ function save_response() {
   FILE_NAME=$1
   DEST_FILE=$DEST_DIR/$FILE_NAME
 
-  curl -s "$URL" >"$DEST_FILE";
+  curl -s "$URL" | jq >"$DEST_FILE";
   if [ "$?" -ne 0 ]; then
     echo "Call to $URL Failed.."
     return 1;
@@ -36,5 +36,5 @@ save_response "channel-info.json"     "$INVIDIOUS_DOMAIN/channels/UCX6OQ3DkcsbYN
 
 save_response "video-info.json"       "$INVIDIOUS_DOMAIN/videos/Wx92JT6IrKY"
 
-save_response "playlist-info.json"    "$INVIDIOUS_DOMAIN/playlist/PLm3v_EFg1EILrg_6fHX6kt2iEoIbFu6n4"
+save_response "playlist-info.json"    "$INVIDIOUS_DOMAIN/playlists/PLm3v_EFg1EILrg_6fHX6kt2iEoIbFu6n4"
 

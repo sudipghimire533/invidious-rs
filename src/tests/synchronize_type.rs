@@ -41,7 +41,7 @@ fn video_info() {
 
 #[test]
 fn channel_info() {
-    assert_ok!(test_type_str::<endpoints::playlists::OkCallbackResponse>(
+    assert_ok!(test_type_str::<endpoints::channels::OkCallbackResponse>(
         "channel-info.json"
     ));
 }
@@ -51,4 +51,9 @@ fn playlist_info() {
     assert_ok!(test_type_str::<endpoints::playlists::OkCallbackResponse>(
         "playlist-info.json"
     ));
+}
+
+#[test]
+fn search_all() {
+    assert_ok!(test_type_str::<endpoints::search::OkCallbackResponse>("search-all.json"));
 }
