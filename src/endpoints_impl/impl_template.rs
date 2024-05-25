@@ -1,9 +1,6 @@
 use std::{future::Future, pin::Pin};
 
-use crate::{
-    endpoints::{self, InstanceUrl},
-    types,
-};
+use crate::endpoints::{self, InstanceUrl};
 
 pub type CallbackErrorOf<T> = <T as InvidiousEndpoint>::CallbackError;
 pub type EndpointErrorOf<T> = endpoints::error::Error<CallbackErrorOf<T>>;
@@ -61,5 +58,28 @@ pub trait InvidiousEndpoint {
             Self::WEB_CALL_GET,
         )
         .await
+    }
+
+    async fn get_channel_shorts(
+        instance: &InstanceUrl,
+        query_params: endpoints::channels::shorts::ChannelShortsParams<'_>,
+    ) -> EndpointResultOf<Self, endpoints::channels::shorts::ChannelShortsResponse> {
+        endpoints::channels::shorts::ChannelShortsEndpoint::call_endpoint::<Self::CallbackError>(
+            instance,
+            query_params,
+            Self::WEB_CALL_GET,
+        )
+        .await
+    }
+
+    async fn get_channel_playlists(
+        instance: &InstanceUrl,
+        query_params: endpoints::playlists::channel::ChannelPlaylistsParams<'_>,
+    ) -> EndpointResultOf<Self, endpoints::playlists::channel::ChannelPlaylistsResponse> {
+        endpoints::playlists::channel::ChannelPlaylistsEndpoint::call_endpoint::<Self::CallbackError>(
+            instance,
+            query_params,
+            Self::WEB_CALL_GET
+        ).await
     }
 }

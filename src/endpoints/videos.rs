@@ -128,8 +128,8 @@ pub mod shorts {
 
     #[derive(Debug, Clone, Eq, PartialEq, Copy)]
     #[repr(transparent)]
-    pub struct ChannelShorts;
-    impl ChannelShorts {
+    pub struct ChannelShortsEndpoint;
+    impl ChannelShortsEndpoint {
         pub async fn call_endpoint<CbError>(
             instance: &InstanceUrl,
             channel_shorts_params: ChannelShortsParams<'_>,
