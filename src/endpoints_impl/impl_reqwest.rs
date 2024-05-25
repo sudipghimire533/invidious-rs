@@ -63,7 +63,6 @@ mod tests {
                     },
                 )
                 .await;
-            println!("{res:?}");
             assert!(res.is_ok());
         }
 
@@ -73,10 +72,11 @@ mod tests {
                 .get_channel_info(
                     &get_instance(),
                     ChannelInfoParams {
-                        channel_id: "UC6nXpRfZ5o0yWJp9wC9B5Hg",
+                        channel_id: "UCC3uNCR99Xw7uy2Gs4BwTrw",
                     },
                 )
                 .await;
+            println!("{res:?}");
             assert!(res.is_ok());
         }
     }

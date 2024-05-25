@@ -62,6 +62,7 @@ pub struct ChannelInfo {
     pub allowed_regions: Vec<String>,
 
     pub tabs: Vec<String>,
+    pub tags: Vec<String>,
 
     pub latest_videos: Vec<common::VideoObject>,
     pub related_channels: Vec<common::ChannelObject>,
