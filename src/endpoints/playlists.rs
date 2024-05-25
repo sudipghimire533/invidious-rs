@@ -48,7 +48,7 @@ pub mod channel {
         post_dynamic_path: None,
     };
 
-    pub type ChannelPlaylistsResponse = types::video::TrendingVideos;
+    pub type OkCallbackResponse = types::video::TrendingVideos;
     #[derive(Debug, Clone)]
     pub struct ChannelPlaylistsParams<'a> {
         pub channel_id: &'a str,
@@ -64,7 +64,7 @@ pub mod channel {
             instance: &InstanceUrl,
             params: ChannelPlaylistsParams<'_>,
             web_call_get: WebCallGet<CbError>,
-        ) -> Result<ChannelPlaylistsResponse, Error<CbError>> {
+        ) -> Result<OkCallbackResponse, Error<CbError>> {
             let query = [
                 ("sort_by", Some(params.sort_by.as_str())),
                 ("continuation", Some(params.continuation.as_str())),

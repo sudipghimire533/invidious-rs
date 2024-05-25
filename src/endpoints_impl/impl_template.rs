@@ -36,7 +36,21 @@ pub trait InvidiousEndpoint {
         .await
     }
 
+    async fn get_playlist_info(
+        &self,
+        instance: &InstanceUrl,
+        query_params: endpoints::playlists::PlaylistInfoParams<'_>,
+    ) -> EndpointResultOf<Self, endpoints::playlists::OkCallbackResponse>{
+        endpoints::playlists::PlaylistInfoEndpoint::call_endpoint::<Self::CallbackError>(
+            instance,
+            query_params,
+            Self::WEB_CALL_GET,
+        )
+        .await
+    }
+
     async fn get_comment_info(
+        &self,
         instance: &InstanceUrl,
         query_params: endpoints::comments::CommentParams<'_>,
     ) -> EndpointResultOf<Self, endpoints::comments::OkCallbackResponse> {
@@ -49,6 +63,7 @@ pub trait InvidiousEndpoint {
     }
 
     async fn get_channel_comment(
+        &self,
         instance: &InstanceUrl,
         query_params: endpoints::channels::comments::ChannelCommentParams<'_>,
     ) -> EndpointResultOf<Self, endpoints::channels::comments::OkCallbackResponse> {
@@ -61,6 +76,7 @@ pub trait InvidiousEndpoint {
     }
 
     async fn get_channel_shorts(
+        &self,
         instance: &InstanceUrl,
         query_params: endpoints::channels::shorts::ChannelShortsParams<'_>,
     ) -> EndpointResultOf<Self, endpoints::channels::shorts::ChannelShortsResponse> {
@@ -73,9 +89,10 @@ pub trait InvidiousEndpoint {
     }
 
     async fn get_channel_playlists(
+        &self,
         instance: &InstanceUrl,
         query_params: endpoints::playlists::channel::ChannelPlaylistsParams<'_>,
-    ) -> EndpointResultOf<Self, endpoints::playlists::channel::ChannelPlaylistsResponse> {
+    ) -> EndpointResultOf<Self, endpoints::playlists::channel::OkCallbackResponse> {
         endpoints::playlists::channel::ChannelPlaylistsEndpoint::call_endpoint::<Self::CallbackError>(
             instance,
             query_params,
