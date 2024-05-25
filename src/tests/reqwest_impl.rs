@@ -1,5 +1,5 @@
-use super::impl_reqwest::*;
-use super::impl_template::*;
+use crate::endpoints_impl::impl_reqwest::*;
+use crate::endpoints_impl::impl_template::*;
 
 use crate::endpoints::channels::ChannelInfoParams;
 use crate::endpoints::playlists::PlaylistInfoParams;
