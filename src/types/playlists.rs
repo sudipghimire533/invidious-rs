@@ -47,9 +47,6 @@ pub struct SearchPlaylistUnit {
     pub videos: Vec<common::PlaylistVideoObject>,
 }
 
-
-
-
 /*
 {
     "title": String,
@@ -93,7 +90,6 @@ pub struct SearchPlaylistUnit {
     ]
 }
 */
-
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]

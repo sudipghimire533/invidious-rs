@@ -436,6 +436,24 @@ pub struct SearchSuggestion {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+pub enum PlaylistSortingOption {
+    Oldest,
+    Newest,
+    Last,
+}
+
+impl PlaylistSortingOption {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Oldest => "oldest",
+            Self::Newest => "newest",
+            Self::Last => "last",
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum SortingOption {
     Relavence,
     Rating,

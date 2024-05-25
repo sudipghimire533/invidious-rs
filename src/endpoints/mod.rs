@@ -6,11 +6,11 @@ use std::{borrow::Cow, boxed::Box, convert::AsRef, future::Future, pin::Pin};
 pub mod channels;
 pub mod comments;
 pub mod error;
+pub mod playlists;
 pub mod search;
 pub mod stats;
 pub mod suggestions;
 pub mod videos;
-pub mod playlists;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct InstanceUrl {

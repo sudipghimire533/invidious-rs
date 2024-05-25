@@ -38,3 +38,48 @@ impl PlaylistInfoEndpoint {
         .await
     }
 }
+
+pub mod channel {
+    use super::*;
+
+    pub const CHANNEL_PLAYLISTS_PATH: &'static str = "/trending";
+    pub const CHANNEL_PLAYLISTS_ENDPOINT: CallableEndpoint = CallableEndpoint {
+        endpoint_path: Cow::Borrowed(CHANNEL_PLAYLISTS_PATH),
+        post_dynamic_path: None,
+    };
+
+    pub type ChannelPlaylistsResponse = types::video::TrendingVideos;
+    #[derive(Debug, Clone)]
+    pub struct ChannelPlaylistsParams<'a> {
+        pub channel_id: &'a str,
+        pub sort_by: types::common::PlaylistSortingOption,
+        pub continuation: String,
+    }
+
+    #[derive(Debug, Clone, Eq, PartialEq, Copy)]
+    #[repr(transparent)]
+    pub struct ChannelPlaylistsEndpoint;
+    impl ChannelPlaylistsEndpoint {
+        pub async fn call_endpoint<CbError>(
+            instance: &InstanceUrl,
+            params: ChannelPlaylistsParams<'_>,
+            web_call_get: WebCallGet<CbError>,
+        ) -> Result<ChannelPlaylistsResponse, Error<CbError>> {
+            let query = [
+                ("sort_by", Some(params.sort_by.as_str())),
+                ("continuation", Some(params.continuation.as_str())),
+            ];
+
+            CallableEndpoint::call(
+                &CHANNEL_PLAYLISTS_ENDPOINT,
+                instance,
+                Some(params.channel_id),
+                Some(query.as_ref()),
+                web_call_get,
+            )
+            .await
+        }
+    }
+}
+
+
