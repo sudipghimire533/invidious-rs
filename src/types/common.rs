@@ -101,7 +101,6 @@ pub struct VideoObject {
     pub published_text: String,
 
     //? pub premiere_timestamp: i64,
-
     pub live_now: bool,
     pub premium: bool,
     pub is_upcoming: bool,
