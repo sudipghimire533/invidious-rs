@@ -47,5 +47,5 @@ impl CommentInfoEndpoint {
 }
 
 pub mod channel {
-    pub use crate::endpoints::channel::comment;
+    pub use crate::endpoints::channels::comments::*;
 }

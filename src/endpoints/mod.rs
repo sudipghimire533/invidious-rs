@@ -10,6 +10,7 @@ pub mod search;
 pub mod stats;
 pub mod suggestions;
 pub mod videos;
+pub mod playlists;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct InstanceUrl {

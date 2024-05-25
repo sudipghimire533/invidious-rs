@@ -43,3 +43,15 @@ pub mod comments {
         }
     }
 }
+
+pub mod shorts {
+    pub use crate::endpoints::videos::shorts::*;
+}
+
+pub mod videos {
+    pub use crate::endpoints::videos::channel;
+}
+
+pub mod playlist {
+    pub use crate::endpoints::playlists::channel;
+}

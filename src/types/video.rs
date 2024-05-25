@@ -397,3 +397,11 @@ pub struct SearchVideoUnit {
     pub paid: bool,
     pub premium: bool,
 }
+
+/// Response to get all videos from channel
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ChannelVideos {
+    pub videos: Vec<VideoInfo>,
+    pub continuation: String,
+}

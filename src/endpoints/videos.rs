@@ -47,6 +47,7 @@ pub mod trending {
         endpoint_path: Cow::Borrowed(TRENDING_VIDEO_PATH),
         post_dynamic_path: None,
     };
+
     pub type TrendingVideoResponse = types::video::TrendingVideos;
     #[derive(Debug, Clone)]
     pub struct TrendingVideoParams {
@@ -89,6 +90,7 @@ pub mod popular {
         endpoint_path: Cow::Borrowed(POPULAR_VIDEO_PATH),
         post_dynamic_path: None,
     };
+
     #[derive(Debug, Clone, Eq, PartialEq, Copy)]
     #[repr(transparent)]
     pub struct PopularVideo;
@@ -101,6 +103,78 @@ pub mod popular {
                 &POPULAR_VIDEO_ENDPOINT,
                 instance,
                 Option::<&'static str>::None,
+                Option::<&[(&'static str, Option<&'static str>)]>::None,
+                web_call_get,
+            )
+            .await
+        }
+    }
+}
+
+pub mod shorts {
+    use super::*;
+
+    pub type ChannelShortsResponse = types::video::ChannelVideos;
+    pub const CHANNEL_SHORTS_STR: &'static str = "/channel";
+    pub const CHANNEL_SHORTS_ENDPOINT: CallableEndpoint = CallableEndpoint {
+        endpoint_path: Cow::Borrowed(CHANNEL_SHORTS_STR),
+        post_dynamic_path: Some(Cow::Borrowed("shorts")),
+    };
+
+    #[derive(Debug, Clone)]
+    pub struct ChannelShortsParams<'a> {
+        pub channel_id: &'a str,
+    }
+
+    #[derive(Debug, Clone, Eq, PartialEq, Copy)]
+    #[repr(transparent)]
+    pub struct ChannelShorts;
+    impl ChannelShorts {
+        pub async fn call_endpoint<CbError>(
+            instance: &InstanceUrl,
+            channel_shorts_params: ChannelShortsParams<'_>,
+            web_call_get: WebCallGet<CbError>,
+        ) -> Result<ChannelShortsResponse, Error<CbError>> {
+            super::CallableEndpoint::call(
+                &CHANNEL_SHORTS_ENDPOINT,
+                instance,
+                Some(channel_shorts_params.channel_id),
+                Option::<&[(&'static str, Option<&'static str>)]>::None,
+                web_call_get,
+            )
+            .await
+        }
+    }
+}
+
+pub mod channel {
+    use super::*;
+
+    pub type ChannelVideosResponse = types::video::ChannelVideos;
+    pub const CHANNEL_VIDEOS_STR: &'static str = "/channel";
+    pub const CHANNEL_VIDEOS_ENDPOINT: CallableEndpoint = CallableEndpoint {
+        endpoint_path: Cow::Borrowed(CHANNEL_VIDEOS_STR),
+        post_dynamic_path: Some(Cow::Borrowed("videos")),
+    };
+
+    #[derive(Debug, Clone)]
+    pub struct ChannelVideosParams<'a> {
+        pub channel_id: &'a str,
+    }
+
+    #[derive(Debug, Clone, Eq, PartialEq, Copy)]
+    #[repr(transparent)]
+    pub struct ChannelVideos;
+    impl ChannelVideos {
+        pub async fn call_endpoint<CbError>(
+            instance: &InstanceUrl,
+            channel_shorts_params: ChannelVideosParams<'_>,
+            web_call_get: WebCallGet<CbError>,
+        ) -> Result<ChannelVideosResponse, Error<CbError>> {
+            super::CallableEndpoint::call(
+                &CHANNEL_VIDEOS_ENDPOINT,
+                instance,
+                Some(channel_shorts_params.channel_id),
                 Option::<&[(&'static str, Option<&'static str>)]>::None,
                 web_call_get,
             )
