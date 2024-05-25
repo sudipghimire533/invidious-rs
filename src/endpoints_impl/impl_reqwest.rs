@@ -19,9 +19,9 @@ impl InvidiousEndpoint for ReqwestInvidious {
 mod tests {
     use super::InvidiousEndpoint;
     use super::*;
+    use crate::endpoints::channels::ChannelInfoParams;
     use crate::endpoints::playlists::PlaylistInfoParams;
     use crate::endpoints::videos::VideoInfoParams;
-    use crate::endpoints::channels::ChannelInfoParams;
     use crate::endpoints::InstanceUrl;
     use crate::types::region::IsoRegion;
 
@@ -63,6 +63,7 @@ mod tests {
                     },
                 )
                 .await;
+            println!("{res:?}");
             assert!(res.is_ok());
         }
 

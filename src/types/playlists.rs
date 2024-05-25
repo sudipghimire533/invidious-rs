@@ -108,11 +108,19 @@ pub struct PlaylistVideoUnit {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PlaylistInfo {
+    #[serde(rename = "type")]
+    pub o_type: String,
+
     pub title: String,
     pub playlist_id: String,
+    pub playlist_thumbnail: String,
+
     pub author: String,
     pub author_id: String,
-    pub author_thumbnails: Vec<common::ThumbnailObject>,
+    pub author_url: String,
+    pub subtitle: Option<String>,
+    pub author_thumbnails: Vec<common::ImageObject>,
+
     pub description: String,
     pub description_html: String,
 
@@ -120,5 +128,6 @@ pub struct PlaylistInfo {
     pub view_count: i64,
     pub updated: i64,
 
+    pub is_listed: bool,
     pub videos: Vec<PlaylistVideoUnit>,
 }
