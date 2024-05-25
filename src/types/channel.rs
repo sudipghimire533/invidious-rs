@@ -43,28 +43,28 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ChannelInfo {
-    author: String,
-    author_id: String,
-    author_url: String,
-    author_verified: bool,
-    author_banners: Vec<common::ImageObject>,
-    author_thumbnails: Vec<common::ImageObject>,
+    pub author: String,
+    pub author_id: String,
+    pub author_url: String,
+    pub author_verified: bool,
+    pub author_banners: Vec<common::ImageObject>,
+    pub author_thumbnails: Vec<common::ImageObject>,
 
-    sub_count: i64,
-    total_views: i64,
-    joined: i64,
+    pub sub_count: i64,
+    pub total_views: i64,
+    pub joined: i64,
 
-    auto_generated: bool,
-    is_family_friendly: bool,
+    pub auto_generated: bool,
+    pub is_family_friendly: bool,
 
-    description: String,
-    description_html: String,
-    allowed_regions: Vec<String>,
+    pub description: String,
+    pub description_html: String,
+    pub allowed_regions: Vec<String>,
 
-    tabs: Vec<String>,
+    pub tabs: Vec<String>,
 
-    latest_videos: Vec<common::VideoObject>,
-    related_channels: Vec<common::ChannelObject>,
+    pub latest_videos: Vec<common::VideoObject>,
+    pub related_channels: Vec<common::ChannelObject>,
 }
 
 /*

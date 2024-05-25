@@ -40,8 +40,21 @@ pub trait InvidiousEndpoint {
         &self,
         instance: &InstanceUrl,
         query_params: endpoints::playlists::PlaylistInfoParams<'_>,
-    ) -> EndpointResultOf<Self, endpoints::playlists::OkCallbackResponse>{
+    ) -> EndpointResultOf<Self, endpoints::playlists::OkCallbackResponse> {
         endpoints::playlists::PlaylistInfoEndpoint::call_endpoint::<Self::CallbackError>(
+            instance,
+            query_params,
+            Self::WEB_CALL_GET,
+        )
+        .await
+    }
+
+    async fn get_channel_info(
+        &self,
+        instance: &InstanceUrl,
+        query_params: endpoints::channels::ChannelInfoParams<'_>,
+    ) -> EndpointResultOf<Self, endpoints::channels::OkCallbackResponse> {
+        endpoints::channels::ChannelInfoEndpoint::call_endpoint::<Self::CallbackError>(
             instance,
             query_params,
             Self::WEB_CALL_GET,

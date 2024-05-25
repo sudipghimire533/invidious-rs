@@ -5,6 +5,38 @@ use super::WebCallGet;
 use crate::types;
 use std::borrow::Cow;
 
+pub const CHANNEL_INFO_PATH: &'static str = "/channels";
+pub static CHANNEL_INFO_ENDPOINT: CallableEndpoint = CallableEndpoint {
+    endpoint_path: Cow::Borrowed(CHANNEL_INFO_PATH),
+    post_dynamic_path: None,
+};
+pub type OkCallbackResponse = types::channel::ChannelInfo;
+
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub struct ChannelInfoParams<'a> {
+    pub channel_id: &'a str,
+}
+
+#[derive(Debug, Clone, Eq, PartialEq, Copy)]
+#[repr(transparent)]
+pub struct ChannelInfoEndpoint;
+impl ChannelInfoEndpoint {
+    pub async fn call_endpoint<CbError>(
+        instance: &InstanceUrl,
+        params: ChannelInfoParams<'_>,
+        web_call_get: WebCallGet<CbError>,
+    ) -> Result<OkCallbackResponse, Error<CbError>> {
+        CallableEndpoint::call(
+            &CHANNEL_INFO_ENDPOINT,
+            instance,
+            Some(params.channel_id),
+            Option::<&[(&'static str, Option<&'static str>)]>::None,
+            web_call_get,
+        )
+        .await
+    }
+}
+
 pub mod comments {
     use super::*;
 
